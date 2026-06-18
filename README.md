@@ -1,51 +1,39 @@
-# Week 6 Example 2 — Free Roam Top-Down with Boss Battle
-
-## What This Example Demonstrates
-
-> **Note for students:** This section is included in example files only to help you study. Do not include it in your Side Quest submissions.
-
-This example builds on Example 1 by replacing the auto-scrolling world with a free roam top-down world. The player moves freely across a large world and a smooth-follow camera keeps them in view. Enemy waves are triggered by the player's position. A minimap shows where enemies and the boss are at all times. A giant orange blob boss spawns when the player enters the boss zone at the top of the world.
-
-- **Free roam world** — the world is 1600×2000px; the player moves in world coordinates and is constrained to world boundaries with `constrain()`
-- **Smooth-follow camera** — `camX` and `camY` track the top-left of the visible area; `lerp()` moves the camera smoothly toward the player each frame; `translate(-camX, -camY)` shifts all world drawing into screen coordinates
-- **`push()` / `pop()` around translate** — everything inside draws in world coordinates; HUD and minimap are drawn after `pop()` in screen coordinates so they stay fixed on screen
-- **`loadJSON()`** — loads `data/enemies.json` in `preload()`; wave trigger positions, enemy speeds, and boss data all stored in one file
-- **Position-based wave triggers** — each wave has a `spawnAt` world Y value; `checkWaveSpawns()` compares `player.y` against each threshold; when the player moves above it the wave spawns
-- **Boss zone** — a glowing area at the top of the world; entering it calls `spawnBoss()` which builds the boss object from JSON data and switches to `STATE_BOSS`
-- **Boss state machine** — cycles through `"pausing"`, `"charging"`, `"retreating"`; charges at the player, overshoots, retreats to the top centre, pauses, repeats
-- **Minimap** — drawn in screen coordinates after `pop()`; uses `map()` to convert world positions to minimap positions; shows player (teal), enemies (orange), boss (red), and a camera viewport rectangle
-- **Two `lerpColor()` bars** — player health shifts green→red; boss health shifts orange→red
-- **Sound hooks** — all sound calls are commented out; hooks for shoot, hit, player hit, boss hit, boss music transition, and win
-- **B key** — skips directly to the boss fight for testing; calls `spawnBoss()` and moves the player into the boss zone
+# Week 6 Example 2 — Free Roam Top-Down with Boss Battle: Papers Please
 
 ## Setup and Interaction Instructions
 
 To run the sketch locally, open `index.html` in Google Chrome using Live Server.
 
 **Controls:**
+
 - Move: WASD
 - Shoot: Spacebar (shoots in the direction you last moved)
 - B: Skip to boss fight (testing only)
 - Restart: R (after win or game over)
 
-Explore the world, survive enemy waves as you move north, then enter the glowing boss zone to fight the giant orange blob. Watch the minimap to track enemies off screen.
-
-**Adding Your Own Sounds**
-1. Add your sound files to `assets/sounds/`
-2. In `preload()`, uncomment the `loadSound()` lines and update the file paths
-3. Uncomment the `play()` or `loop()` calls in the relevant functions — there are hooks for the boss music transition too
-
-**Editing the Waves and Boss**
-Open `data/enemies.json` to change when waves spawn, how many enemies appear, their speed, and the boss stats. Each wave has a `spawnAt` world Y value — lower values trigger later since the player starts at the bottom of the world.
-
-**Opening the Chrome Console**
-- **Windows:** Press `F12` or `Ctrl + Shift + J`, then click the **Console** tab
-- **Mac:** Press `Cmd + Option + J`
+Explore the Papers Please world and survive enemy waves as you move north, then enter the boss zone to fight the giant guard. Watch the minimap to track enemies off screen.
 
 ## Assets
 
-No external assets used. All visuals are generated with p5.js.
+| File                            | Source               |
+| ------------------------------- | -------------------- |
+| `assets/images/enemy_blue.png`  | By aveontrainer [1]  |
+| `assets/sounds/damage.mp3`      | By DRAGON-STUDIO [2] |
+| `assets/sounds/maintheme.mp3`   | By Lucas Pope [3]    |
+| `assets/images/player_grey.png` | By shaneul [4]       |
+| `assets/images/background.jpeg` | By SteamDB [5]       |
+| `assets/sounds/gunshot.mp3`     | By SUBMORITY [6]     |
 
 ## References
 
-N/A
+[1] aveontrainer. 2019. Policeman. DeviantArt. Retrieved June 17, 2026 from https://www.deviantart.com/aveontrainer/art/Policeman-824159635
+
+[2] DRAGON-STUDIO. n.d. Gunshot. Pixabay. Retrieved June 17, 2026 from https://pixabay.com/users/dragon-studio-38165424/
+
+[3] Lucas Pope. 2013. Glory to Arstotzka (Main Theme) – Papers, Please OST. KHInsider. Retrieved June 17, 2026 from https://downloads.khinsider.com/game-soundtracks/album/papers-please-ost/01.%2520Glory%2520to%2520Arstotzka%2520%2528Main%2520Theme%2529.mp3
+
+[4] shaneul. 2014. Pokemon Sprite, altered Police Officer. DeviantArt. Retrieved June 17, 2026 from https://www.deviantart.com/shaneul/art/Pokemon-Sprite-altered-Police-Officer-481554000
+
+[5] SteamDB. n.d. Papers, Please Community Items. Retrieved June 17, 2026 from https://steamdb.info/app/239030/communityitems/
+
+[6] SUBMORITY. n.d. BOOM Geomorphism | Cinematic Trailer Sound Effects. Pixabay. Retrieved June 17, 2026 from https://pixabay.com/users/submority-30821389/
